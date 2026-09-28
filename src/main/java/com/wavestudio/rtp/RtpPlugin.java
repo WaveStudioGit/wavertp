@@ -23,7 +23,9 @@ public class RtpPlugin extends JavaPlugin implements PluginBootstrap {
 
     @Override
     public void bootstrap(BootstrapContext context) {
+        getLogger().info("Bootstrap called - registering commands");
         context.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            getLogger().info("COMMANDS lifecycle event triggered");
             var registrar = event.registrar();
             
             // Initialize dependencies
@@ -35,7 +37,7 @@ public class RtpPlugin extends JavaPlugin implements PluginBootstrap {
 
             this.rtpCommand = new RtpCommand(this, config, messageProvider, dialogFactory, locationFinder, cooldownManager);
 
-            registrar.register(Commands.literal("rtp")
+            var command = Commands.literal("rtp")
                 .executes(ctx -> {
                     if (!(ctx.getSource() instanceof CommandSourceStack)) return 0;
                     var sender = ctx.getSource().getSender();
@@ -93,8 +95,11 @@ public class RtpPlugin extends JavaPlugin implements PluginBootstrap {
                         })
                     )
                 )
-                .build()
-            );
+                .build();
+            
+            getLogger().info("Registering rtp command...");
+            registrar.register(command);
+            getLogger().info("rtp command registered successfully");
         });
     }
 
