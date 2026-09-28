@@ -1,0 +1,14 @@
+name: wavertp
+version: 1.0.0
+main: com.wavestudio.rtp.RtpPlugin
+api-version: '1.21'
+description: High-performance 3-dimension random teleport plugin with Paper Dialog API
+author: wavestudio
+load: STARTUP
+
+commands:
+  rtp:
+    description: Random teleport to another dimension
+    usage: /rtp [reload|cooldown]
+    permission: wavertp.use
+    permission-message: You don't have permission to use this command
