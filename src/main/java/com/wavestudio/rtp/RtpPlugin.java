@@ -29,9 +29,9 @@ public class RtpPlugin extends JavaPlugin {
 
         RtpCommand rtpCommand = new RtpCommand(this, config, messageProvider, dialogFactory, locationFinder, cooldownManager);
         
-        // Use registerCommand for Paper plugin (commands defined in paper-plugin.yml)
-        getServer().getPluginCommand("rtp").setExecutor(rtpCommand);
-        getServer().getPluginCommand("rtp").setTabCompleter(rtpCommand);
+        // Use getCommand() from JavaPlugin (works with paper-plugin.yml commands)
+        getCommand("rtp").setExecutor(rtpCommand);
+        getCommand("rtp").setTabCompleter(rtpCommand);
 
         getLogger().info("MultiDimensionRTP enabled successfully!");
         getLogger().info("By wavestudio");
