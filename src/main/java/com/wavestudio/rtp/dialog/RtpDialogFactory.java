@@ -436,37 +436,60 @@ public class RtpDialogFactory {
         World world = Bukkit.getWorld(config.getWorldName(dimension));
         if (world == null) {
             player.sendMessage(messages.prefixed("error.world-not-found", Map.of("world", config.getWorldName(dimension))));
+            cooldownManager.removeCooldown(player.getUniqueId());
             return;
         }
 
         org.bukkit.Location bukkitLoc = new org.bukkit.Location(world, location.getX(), location.getY(), location.getZ());
 
-        playTeleportEffects(player, bukkitLoc);
+        playSourceEffects(player);
 
-        player.teleport(bukkitLoc);
-
-        player.sendMessage(messages.prefixed("result.success", Map.of(
-                "dimension", dimension.getName()
-        )));
+        player.teleportAsync(bukkitLoc).thenAccept(ok -> {
+            if (Boolean.TRUE.equals(ok)) {
+                playDestEffects(bukkitLoc);
+                player.sendMessage(messages.prefixed("result.success", Map.of(
+                        "dimension", dimension.getName()
+                )));
+            } else {
+                player.sendMessage(messages.prefixed("result.failed-generic", Map.of()));
+                cooldownManager.removeCooldown(player.getUniqueId());
+            }
+        });
     }
 
     private void playTeleportEffects(Player player, org.bukkit.Location destination) {
+        playSourceEffects(player);
+        playDestEffects(destination);
+    }
+
+    private void playSourceEffects(Player player) {
         Map<String, Object> effects = config.getEffectsSettings();
 
         String soundName = (String) effects.getOrDefault("sound", "ENTITY_ENDERMAN_TELEPORT");
         String sourceParticle = (String) effects.getOrDefault("source-particle", "PORTAL");
-        String destParticle = (String) effects.getOrDefault("dest-particle", "END_ROD");
         int particleCount = (int) effects.getOrDefault("particle-count", 30);
 
         try {
             org.bukkit.Sound sound = org.bukkit.Sound.valueOf(soundName);
             player.getWorld().playSound(player.getLocation(), sound, 1.0f, 1.0f);
-            destination.getWorld().playSound(destination, sound, 1.0f, 1.0f);
         } catch (IllegalArgumentException ignored) {}
 
         try {
             org.bukkit.Particle particle = org.bukkit.Particle.valueOf(sourceParticle);
             player.getWorld().spawnParticle(particle, player.getLocation(), particleCount, 0.5, 0.5, 0.5, 0.1);
+        } catch (IllegalArgumentException ignored) {}
+    }
+
+    private void playDestEffects(org.bukkit.Location destination) {
+        Map<String, Object> effects = config.getEffectsSettings();
+
+        String soundName = (String) effects.getOrDefault("sound", "ENTITY_ENDERMAN_TELEPORT");
+        String destParticle = (String) effects.getOrDefault("dest-particle", "END_ROD");
+        int particleCount = (int) effects.getOrDefault("particle-count", 30);
+
+        try {
+            org.bukkit.Sound sound = org.bukkit.Sound.valueOf(soundName);
+            destination.getWorld().playSound(destination, sound, 1.0f, 1.0f);
         } catch (IllegalArgumentException ignored) {}
 
         try {

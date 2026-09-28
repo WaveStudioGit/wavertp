@@ -5,3 +5,4 @@ api-version: '1.21'
 description: High-performance 3-dimension random teleport plugin with Paper Dialog API
 author: wavestudio
 load: STARTUP
+folia-supported: true
