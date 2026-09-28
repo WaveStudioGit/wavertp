@@ -1,0 +1,75 @@
+# Cooldown in seconds between RTP uses per player
+cooldown-seconds: 10
+
+# Maximum search attempts before giving up
+max-attempts: 20
+
+# Search radius from world origin (0,0) in blocks
+search-radius: 10000
+
+# World names (leave empty to use default worlds)
+worlds:
+  overworld: "world"
+  nether: "world_nether"
+  end: "world_the_end"
+
+# Overworld settings
+overworld:
+  # Avoid these biomes (biome IDs)
+  avoid-biomes:
+    - "ocean"
+    - "deep_ocean"
+    - "lukewarm_ocean"
+    - "cold_ocean"
+    - "frozen_ocean"
+  # Avoid these block types at landing spot
+  avoid-blocks:
+    - "water"
+    - "lava"
+    - "fire"
+    - "soul_fire"
+  # Require this many air blocks above ground
+  required-air-blocks: 2
+
+# Nether settings
+nether:
+  # Minimum Y level (avoid lava lakes at bottom)
+  min-y: 33
+  # Maximum Y level (avoid bedrock roof)
+  max-y: 126
+  # Avoid these block types
+  avoid-blocks:
+    - "lava"
+    - "fire"
+    - "soul_fire"
+    - "magma_block"
+  # Require solid ground below
+  require-solid-ground: true
+  # Required air blocks above
+  required-air-blocks: 2
+
+# End settings
+end:
+  # Minimum Y level (avoid void)
+  min-y: 1
+  # Search only on end stone/end stone bricks
+  valid-ground-blocks:
+    - "end_stone"
+    - "end_stone_bricks"
+    - "purpur_block"
+  # Avoid these blocks
+  avoid-blocks:
+    - "void_air"
+  # Required air blocks above
+  required-air-blocks: 2
+
+# Teleport effects
+effects:
+  # Sound on successful teleport
+  sound: "ENTITY_ENDERMAN_TELEPORT"
+  # Particle at source location
+  source-particle: "PORTAL"
+  # Particle at destination
+  dest-particle: "END_ROD"
+  # Particle count
+  particle-count: 30

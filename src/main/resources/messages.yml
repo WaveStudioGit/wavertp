@@ -1,0 +1,57 @@
+# MultiDimensionRTP Messages
+# All user-facing messages - supports MiniMessage format
+# Placeholders: {dimension}, {seconds}, {attempts}, {cooldown}, {prefix}
+
+# Global prefix for all plugin messages
+prefix: "<gradient:#00FF88:#00FFFF><bold>RTP</bold></gradient> <dark_gray>»</dark_gray> "
+
+# Command messages
+command:
+  no-permission: "<red>You don't have permission to use this command."
+  player-only: "<red>This command can only be used by players."
+  cooldown: "<red>Please wait <yellow>{seconds}</yellow> second(s) before using RTP again."
+  reloaded: "<green>Configuration reloaded successfully!"
+
+# Dialog messages
+dialog:
+  title: "<gradient:#FFD700:#FFA500><bold>Random Teleport</bold></gradient>"
+  body: |
+    <gray>Select a dimension to teleport to.</gray>
+    <dark_gray>Each dimension has different risks and rewards.</dark_gray>
+  
+  # Dimension selector input
+  dimension-label: "<yellow>Destination Dimension</yellow>"
+  dimensions:
+    overworld: "<green>🌍 Overworld</green> <gray>(Surface, biomes vary)</gray>"
+    nether: "<red>🌋 Nether</red> <gray>(Dangerous, resources rich)</gray>"
+    end: "<aqua>💎 The End</aqua> <gray>(Void islands, end cities)</gray>"
+
+  # Confirmation buttons
+  confirm-button: "<green><bold>Confirm Teleport</bold></green>"
+  confirm-tooltip: "<gray>Click to start searching for a safe location</gray>"
+  cancel-button: "<red><bold>Cancel</bold></red>"
+  cancel-tooltip: "<gray>Close this dialog without teleporting</gray>"
+
+  # Item display in body (descriptions)
+  item-descriptions:
+    overworld: "<green>Overworld</green>\n<gray>Spawn on surface, avoid oceans & lava</gray>"
+    nether: "<red>Nether</red>\n<gray>Find air pockets, avoid bedrock roof & lava lakes</gray>"
+    end: "<aqua>The End</aqua>\n<gray>Land on end stone islands, avoid the void</gray>"
+
+# Process messages
+process:
+  searching: "<yellow>Searching for safe location in <gradient:#00FF88:#00FFFF>{dimension}</gradient>... <dark_gray>(attempt {attempt}/{max})</dark_gray>"
+  found: "<green>Found safe location! Teleporting...</green>"
+  failed: "<red>Could not find a safe location after <yellow>{attempts}</yellow> attempts. Please try again."
+  cancelled: "<red>Teleport cancelled."
+
+# Result messages
+result:
+  success: "<green>Successfully teleported to <gradient:#00FF88:#00FFFF>{dimension}</gradient>!"
+  failed-generic: "<red>Teleport failed. Please try again later."
+
+# Error messages
+error:
+  world-not-found: "<red>World <yellow>{world}</yellow> not found!"
+  no-world-access: "<red>Cannot access <yellow>{dimension}</yellow> dimension."
+  internal-error: "<red>An internal error occurred. Please contact an administrator."
