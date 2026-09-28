@@ -1,5 +1,5 @@
 name: wavertp
-version: 1.0.0
+version: 1.0.1
 main: com.wavestudio.rtp.RtpPlugin
 api-version: '1.21'
 description: High-performance 3-dimension random teleport plugin with Paper Dialog API
