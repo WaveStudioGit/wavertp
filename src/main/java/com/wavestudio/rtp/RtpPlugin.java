@@ -32,7 +32,7 @@ public class RtpPlugin extends JavaPlugin {
 
         this.config = new RtpConfig(this);
         this.messageProvider = new MessageProvider(config);
-        this.cooldownManager = new CooldownManager(config.getCooldownSeconds());
+        this.cooldownManager = new CooldownManager(config);
         this.locationFinder = new SafeLocationFinder(this, config);
         this.dialogFactory = new RtpDialogFactory(this, config, messageProvider, locationFinder, cooldownManager);
         this.rtpCommand = new RtpCommand(this, config, messageProvider, dialogFactory, locationFinder, cooldownManager);
@@ -105,11 +105,11 @@ public class RtpPlugin extends JavaPlugin {
                                             .executes(ctx -> {
                                                 var sender = ctx.getSource().getSender();
                                                 if (sender instanceof org.bukkit.entity.Player player) {
-                                                    long remaining = cooldownManager.getRemainingSeconds(player.getUniqueId());
+                                                    long remaining = cooldownManager.getRemainingSeconds(player);
                                                     if (remaining > 0) {
-                                                        sender.sendMessage(messageProvider.parseRaw("<yellow>" + player.getName() + " has " + remaining + "s cooldown remaining."));
+                                                        sender.sendMessage(messageProvider.parseRaw("<yellow>" + player.getName() + " has " + remaining + "s cooldown remaining (" + cooldownManager.getCooldownSeconds(player) + "s rank cooldown)."));
                                                     } else {
-                                                        sender.sendMessage(messageProvider.parseRaw("<green>" + player.getName() + " has no cooldown."));
+                                                        sender.sendMessage(messageProvider.parseRaw("<green>" + player.getName() + " has no cooldown (" + cooldownManager.getCooldownSeconds(player) + "s rank cooldown)."));
                                                     }
                                                 }
                                                 return 1;

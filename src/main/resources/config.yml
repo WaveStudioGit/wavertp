@@ -1,5 +1,18 @@
-# Cooldown in seconds between RTP uses per player
-cooldown-seconds: 10
+# Default cooldown in seconds between RTP uses per player
+cooldown-seconds: 5
+
+# Permission to bypass cooldown completely
+cooldown-bypass-permission: "wavertp.bypass"
+
+# Per-rank cooldowns (checked by permission, lowest matching value wins)
+# Give players e.g. "wavertp.rank.vip" to use the vip cooldown below
+rank-cooldowns:
+  vip:
+    permission: "wavertp.rank.vip"
+    cooldown-seconds: 3
+  mvp:
+    permission: "wavertp.rank.mvp"
+    cooldown-seconds: 1
 
 # Maximum search attempts before giving up
 max-attempts: 20

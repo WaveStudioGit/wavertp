@@ -1,6 +1,8 @@
 # MultiDimensionRTP Messages
 # All user-facing messages - supports MiniMessage format
 # Placeholders: {dimension}, {seconds}, {attempts}, {cooldown}, {prefix}
+# This file auto-updates when messages-version increases (old file kept as messages.yml.bak)
+messages-version: 2
 
 # Global prefix for all plugin messages
 prefix: "<gradient:#00FF88:#00FFFF><bold>RTP</bold></gradient> <dark_gray>»</dark_gray> "
@@ -14,29 +16,27 @@ command:
 
 # Dialog messages
 dialog:
-  title: "<gradient:#FFD700:#FFA500><bold>Random Teleport</bold></gradient>"
-  body: |
-    <gray>Select a dimension to teleport to.</gray>
-    <dark_gray>Each dimension has different risks and rewards.</dark_gray>
-  
-  # Dimension selector input
-  dimension-label: "<yellow>Destination Dimension</yellow>"
+  title: "<gold><bold>Random Teleport</bold></gold>"
+  body: "<gray>Select a dimension to teleport to.</gray>"
+
+  # Dimension selector input (keep these SHORT - shown in the bottom selector)
+  dimension-label: "<yellow>Dimension</yellow>"
   dimensions:
-    overworld: "<green>🌍 Overworld</green> <gray>(Surface, biomes vary)</gray>"
-    nether: "<red>🌋 Nether</red> <gray>(Dangerous, resources rich)</gray>"
-    end: "<aqua>💎 The End</aqua> <gray>(Void islands, end cities)</gray>"
+    overworld: "<green>Overworld</green>"
+    nether: "<red>Nether</red>"
+    end: "<aqua>The End</aqua>"
 
   # Confirmation buttons
-  confirm-button: "<green><bold>Confirm Teleport</bold></green>"
-  confirm-tooltip: "<gray>Click to start searching for a safe location</gray>"
+  confirm-button: "<green><bold>Confirm</bold></green>"
+  confirm-tooltip: "<gray>Teleport to the selected dimension</gray>"
   cancel-button: "<red><bold>Cancel</bold></red>"
-  cancel-tooltip: "<gray>Close this dialog without teleporting</gray>"
+  cancel-tooltip: "<gray>Close without teleporting</gray>"
 
-  # Item display in body (descriptions)
+  # Item display in body (keep these SHORT - one line each)
   item-descriptions:
-    overworld: "<green>Overworld</green>\n<gray>Spawn on surface, avoid oceans & lava</gray>"
-    nether: "<red>Nether</red>\n<gray>Find air pockets, avoid bedrock roof & lava lakes</gray>"
-    end: "<aqua>The End</aqua>\n<gray>Land on end stone islands, avoid the void</gray>"
+    overworld: "<green>Overworld</green> <gray>- surface spawn</gray>"
+    nether: "<red>Nether</red> <gray>- air pockets</gray>"
+    end: "<aqua>The End</aqua> <gray>- end stone islands</gray>"
 
 # Process messages
 process:

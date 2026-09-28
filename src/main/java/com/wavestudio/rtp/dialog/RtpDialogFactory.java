@@ -46,8 +46,8 @@ public class RtpDialogFactory {
     }
 
     public void showRtpDialog(Player player) {
-        if (cooldownManager.isOnCooldown(player.getUniqueId())) {
-            long remaining = cooldownManager.getRemainingSeconds(player.getUniqueId());
+        if (cooldownManager.isOnCooldown(player)) {
+            long remaining = cooldownManager.getRemainingSeconds(player);
             player.sendMessage(messages.parse("command.cooldown", Map.of("seconds", String.valueOf(remaining))));
             return;
         }
@@ -63,8 +63,8 @@ public class RtpDialogFactory {
             return;
         }
 
-        if (cooldownManager.isOnCooldown(player.getUniqueId())) {
-            long remaining = cooldownManager.getRemainingSeconds(player.getUniqueId());
+        if (cooldownManager.isOnCooldown(player)) {
+            long remaining = cooldownManager.getRemainingSeconds(player);
             player.sendMessage(messages.parse("command.cooldown", Map.of("seconds", String.valueOf(remaining))));
             return;
         }
@@ -124,8 +124,8 @@ public class RtpDialogFactory {
                     DialogBody.plainMessage(description),
                     true,
                     true,
-                    80,
-                    80
+                    40,
+                    40
             ));
         }
 

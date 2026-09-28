@@ -102,11 +102,11 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(messages.parseRaw("<green>Cooldown cleared for " + target.getName()));
             }
             case "check" -> {
-                long remaining = cooldownManager.getRemainingSeconds(target.getUniqueId());
+                long remaining = cooldownManager.getRemainingSeconds(target);
                 if (remaining > 0) {
-                    player.sendMessage(messages.parseRaw("<yellow>" + target.getName() + " has " + remaining + "s cooldown remaining."));
+                    player.sendMessage(messages.parseRaw("<yellow>" + target.getName() + " has " + remaining + "s cooldown remaining (" + cooldownManager.getCooldownSeconds(target) + "s rank cooldown)."));
                 } else {
-                    player.sendMessage(messages.parseRaw("<green>" + target.getName() + " has no cooldown."));
+                    player.sendMessage(messages.parseRaw("<green>" + target.getName() + " has no cooldown (" + cooldownManager.getCooldownSeconds(target) + "s rank cooldown)."));
                 }
             }
             default -> player.sendMessage(messages.parseRaw("<red>Unknown action: " + action));
