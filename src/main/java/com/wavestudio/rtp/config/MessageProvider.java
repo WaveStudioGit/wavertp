@@ -1,5 +1,6 @@
 package com.wavestudio.rtp.config;
 
+import com.wavestudio.rtp.model.Dimension;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;

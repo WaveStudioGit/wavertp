@@ -63,4 +63,12 @@ public enum Dimension {
     public String getConfigKey() {
         return id.toLowerCase(Locale.ROOT);
     }
+
+    public String getName() {
+        return switch (this) {
+            case OVERWORLD -> "Overworld";
+            case NETHER -> "Nether";
+            case END -> "The End";
+        };
+    }
 }
