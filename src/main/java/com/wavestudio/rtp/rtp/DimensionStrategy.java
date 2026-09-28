@@ -1,24 +1,21 @@
 package com.wavestudio.rtp.rtp;
 
 import com.wavestudio.rtp.config.RtpConfig;
-import com.wavestudio.rtp.model.Dimension;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.util.Vector;
 
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Predicate;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 
 public interface DimensionStrategy {
     String getName();
 
-    CompletableFuture<Optional<Vector>> findSafeLocation(World world, int centerX, int centerZ, int radius, int maxAttempts, RtpConfig config);
+    Optional<Vector> check(World world, int x, int z, RtpConfig config);
 
     default boolean isSafeGround(Material material, Set<Material> avoidBlocks) {
         return material != null && material.isSolid() && !avoidBlocks.contains(material);
@@ -26,10 +23,6 @@ public interface DimensionStrategy {
 
     default boolean isAir(Material material) {
         return material == null || material == Material.AIR || material == Material.CAVE_AIR || material == Material.VOID_AIR;
-    }
-
-    default boolean isLiquid(Material material) {
-        return material != null && (material == Material.WATER || material == Material.LAVA);
     }
 
     default Predicate<Biome> createBiomePredicate(Set<String> avoidBiomeNames) {

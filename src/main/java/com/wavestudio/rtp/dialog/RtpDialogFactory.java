@@ -81,7 +81,7 @@ public class RtpDialogFactory {
                 .thenAccept(optionalLoc -> {
                     if (!player.isOnline()) return;
 
-                    Bukkit.getScheduler().runTask(plugin, () -> {
+                    player.getScheduler().run(plugin, task -> {
                         if (optionalLoc.isPresent()) {
                             performTeleport(player, dimension, optionalLoc.get());
                         } else {
@@ -90,7 +90,7 @@ public class RtpDialogFactory {
                             )));
                             cooldownManager.removeCooldown(player.getUniqueId());
                         }
-                    });
+                    }, null);
                 });
     }
 
@@ -214,10 +214,21 @@ public class RtpDialogFactory {
 
         player.teleportAsync(bukkitLoc).thenAccept(ok -> {
             if (Boolean.TRUE.equals(ok)) {
-                playDestEffects(bukkitLoc);
-                player.sendMessage(messages.prefixed("result.success", Map.of(
-                        "dimension", dimension.getName()
-                )));
+                try {
+                    Bukkit.getRegionScheduler().run(plugin, world,
+                            bukkitLoc.getBlockX() >> 4, bukkitLoc.getBlockZ() >> 4,
+                            task -> {
+                                playDestEffects(bukkitLoc);
+                                player.sendMessage(messages.prefixed("result.success", Map.of(
+                                        "dimension", dimension.getName()
+                                )));
+                            });
+                } catch (Exception e) {
+                    playDestEffects(bukkitLoc);
+                    player.sendMessage(messages.prefixed("result.success", Map.of(
+                            "dimension", dimension.getName()
+                    )));
+                }
             } else {
                 player.sendMessage(messages.prefixed("result.failed-generic", Map.of()));
                 cooldownManager.removeCooldown(player.getUniqueId());
