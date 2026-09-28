@@ -4,14 +4,17 @@ import com.wavestudio.rtp.command.RtpCommand;
 import com.wavestudio.rtp.config.MessageProvider;
 import com.wavestudio.rtp.config.RtpConfig;
 import com.wavestudio.rtp.dialog.RtpDialogFactory;
+import com.wavestudio.rtp.model.Dimension;
 import com.wavestudio.rtp.rtp.SafeLocationFinder;
 import com.wavestudio.rtp.util.CooldownManager;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.Map;
 
 public class RtpPlugin extends JavaPlugin {
     private RtpConfig config;
@@ -54,6 +57,28 @@ public class RtpPlugin extends JavaPlugin {
                                         config.reload();
                                         cooldownManager.clear();
                                         ctx.getSource().getSender().sendMessage(messageProvider.parse("command.reloaded"));
+                                        return 1;
+                                    }))
+                            .then(Commands.argument("dimension", StringArgumentType.word())
+                                    .suggests((ctx, builder) -> {
+                                        for (Dimension dim : Dimension.values()) {
+                                            builder.suggest(dim.getId());
+                                        }
+                                        return builder.buildFuture();
+                                    })
+                                    .executes(ctx -> {
+                                        var sender = ctx.getSource().getSender();
+                                        if (!(sender instanceof org.bukkit.entity.Player player)) {
+                                            sender.sendMessage(messageProvider.parse("command.player-only"));
+                                            return 1;
+                                        }
+                                        String raw = ctx.getArgument("dimension", String.class);
+                                        Dimension dim = Dimension.fromId(raw);
+                                        if (dim == null) {
+                                            sender.sendMessage(messageProvider.prefixed("error.internal-error", Map.of()));
+                                            return 0;
+                                        }
+                                        dialogFactory.startTeleport(player, dim);
                                         return 1;
                                     }))
                             .then(Commands.literal("cooldown")
