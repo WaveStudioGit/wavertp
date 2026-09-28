@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class RtpConfig {
-    public static final int MESSAGES_VERSION = 3;
+    public static final int MESSAGES_VERSION = 2;
 
     public record RankCooldown(String name, String permission, int seconds) {}
 

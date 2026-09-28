@@ -11,8 +11,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -122,52 +120,6 @@ public class RtpPlugin extends JavaPlugin {
                     List.of()
             );
             getLogger().info("/rtp registered via Brigadier");
-
-            event.registrar().register(
-                    Commands.literal("stafftp")
-                            .requires(source -> source.getSender().hasPermission("wavertp.staff"))
-                            .then(Commands.argument("target", StringArgumentType.word())
-                                    .suggests((ctx, builder) -> {
-                                        for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
-                                            builder.suggest(p.getName());
-                                        }
-                                        return builder.buildFuture();
-                                    })
-                                    .executes(ctx -> {
-                                        var sender = ctx.getSource().getSender();
-                                        if (!(sender instanceof org.bukkit.entity.Player player)) {
-                                            sender.sendMessage(messageProvider.parse("command.player-only"));
-                                            return 1;
-                                        }
-                                        String name = ctx.getArgument("target", String.class);
-                                        org.bukkit.entity.Player target = Bukkit.getPlayerExact(name);
-                                        if (target == null) {
-                                            sender.sendMessage(messageProvider.parse("stafftp.player-not-found", Map.of("target", name)));
-                                            return 0;
-                                        }
-                                        GameMode before = player.getGameMode();
-                                        player.teleportAsync(target.getLocation()).thenAccept(ok -> {
-                                            if (!Boolean.TRUE.equals(ok)) {
-                                                player.sendMessage(messageProvider.parse("stafftp.failed", Map.of("target", target.getName())));
-                                                return;
-                                            }
-                                            player.getScheduler().run(this, task -> {
-                                                if (player.getGameMode() != before) {
-                                                    player.setGameMode(before);
-                                                }
-                                                player.sendMessage(messageProvider.parse("stafftp.teleported", Map.of(
-                                                        "target", target.getName(),
-                                                        "gamemode", before.name()
-                                                )));
-                                            }, null);
-                                        });
-                                        return 1;
-                                    }))
-                            .build(),
-                    "Teleport to a player while keeping your gamemode",
-                    List.of()
-            );
-            getLogger().info("/stafftp registered via Brigadier");
         });
 
         getLogger().info("wavertp enabled");

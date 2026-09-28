@@ -2,7 +2,7 @@
 # All user-facing messages - supports MiniMessage format
 # Placeholders: {dimension}, {seconds}, {attempts}, {cooldown}, {prefix}
 # This file auto-updates when messages-version increases (old file kept as messages.yml.bak)
-messages-version: 3
+messages-version: 2
 
 # Global prefix for all plugin messages
 prefix: "<gradient:#00FF88:#00FFFF><bold>RTP</bold></gradient> <dark_gray>»</dark_gray> "
@@ -55,9 +55,3 @@ error:
   world-not-found: "<red>World <yellow>{world}</yellow> not found!"
   no-world-access: "<red>Cannot access <yellow>{dimension}</yellow> dimension."
   internal-error: "<red>An internal error occurred. Please contact an administrator."
-
-# Staff teleport messages
-stafftp:
-  player-not-found: "<red>Player <yellow>{target}</yellow> not found."
-  teleported: "<green>Teleported to <yellow>{target}</yellow> <gray>(gamemode kept: {gamemode})</gray>"
-  failed: "<red>Could not teleport to <yellow>{target}</yellow>."
